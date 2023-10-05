@@ -96,7 +96,10 @@ public class JSONParser
 		 * 		instances of PointNodeDatabase and SegmentNodeDatabase
 		 */
 		PointNodeDatabase pointNodeDatabase = readsPNDB(pndb);
+		//should become a call to buildPointNodeDatabase 
 		SegmentNodeDatabase segmentNodeDatabase = readsSNDB(sndb, pointNodeDatabase);
+		//should become a call to buildSegmentNodeDatabase 
+
 		
 		/**
 		 * Instantiates a FigureNode object, and assigns it to _astRoot

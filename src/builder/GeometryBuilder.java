@@ -36,6 +36,7 @@ public class GeometryBuilder extends DefaultBuilder {
     public void addSegmentToDatabase(SegmentNodeDatabase segments, PointNode from, PointNode to) {
     	if (segments != null) segments.addUndirectedEdge(from, to);
     	//TODO: figure out what method is supposed to iterate over segmentNodeDatabase
+    	//test comment
     }
     
 	@Override
