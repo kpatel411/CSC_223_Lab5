@@ -18,7 +18,6 @@ public class UnparseVisitor implements ComponentNodeVisitor
 	@Override
 	public Object visitFigureNode(FigureNode node, Object o)
 	{
-		// Unpack the input object containing a Stringbuilder and an indentation level
 		@SuppressWarnings("unchecked")
 		AbstractMap.SimpleEntry<StringBuilder, Integer> pair = (AbstractMap.SimpleEntry<StringBuilder, Integer>)(o);
 		StringBuilder sb = pair.getKey();
@@ -58,10 +57,6 @@ public class UnparseVisitor implements ComponentNodeVisitor
 		return sb;
 	}
 
-	/**
-	 * This method should NOT be called since the segment database
-	 * uses the Adjacency list representation
-	 */
 	@Override
 	public Object visitSegmentNode(SegmentNode node, Object o)
 	{
