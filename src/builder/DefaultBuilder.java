@@ -1,4 +1,4 @@
-package input.builder;
+package builder;
 
 import java.util.List;
 
