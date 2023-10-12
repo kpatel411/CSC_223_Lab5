@@ -9,10 +9,10 @@ import org.json.JSONTokener;
 
 import input.components.ComponentNode;
 import input.components.FigureNode;
-import input.components.PointNode;
-import input.components.PointNodeDatabase;
-import input.components.SegmentNode;
-import input.components.SegmentNodeDatabase;
+import input.components.point.PointNode;
+import input.components.point.PointNodeDatabase;
+import input.components.segments.SegmentNode;
+import input.components.segments.SegmentNodeDatabase;
 import input.exception.ParseException;
 
 public class GeometryBuilder extends DefaultBuilder {

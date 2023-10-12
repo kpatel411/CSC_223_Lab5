@@ -1,11 +1,13 @@
-package input.components;
+package input.components.point;
 
+import input.components.ComponentNode;
 import utilities.math.MathUtilities;
+import visitor.ComponentNodeVisitor;
 
 /**
  * A 2D Point (x, y).
  */
-public class PointNode
+public class PointNode implements ComponentNode 
 {
 	protected static final String ANONYMOUS = "__UNNAMED";
 
@@ -65,5 +67,10 @@ public class PointNode
     public String toString()
     {
 		return String.format("%s(%.0f, %.0f)", this.getName(), this.getX(), this.getY());
+	}
+
+	@Override
+	public Object accept(ComponentNodeVisitor visitor, Object o) {
+		return visitor.visitPointNode(this, o);
 	}
 }

@@ -1,4 +1,4 @@
-package input.components;
+package input.components.segments;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -6,11 +6,16 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import input.components.ComponentNode;
+import input.components.point.PointNode;
+import visitor.ComponentNodeVisitor;
+
 import java.util.Set;
 
 //import input.components.point.PointNode;
 
-public class SegmentNodeDatabase {
+public class SegmentNodeDatabase implements ComponentNode {
 
 	protected Map<PointNode, Set<PointNode>> _adjLists; 
 	
@@ -81,5 +86,14 @@ public class SegmentNodeDatabase {
 			segmentNodeList.add(nodeOf.getName());
 		}
 		return segmentNodeList;
+	}
+	
+	public  Map<PointNode, Set<PointNode>> getAdjLists() {
+		return _adjLists;
+	}
+
+	@Override
+	public Object accept(ComponentNodeVisitor visitor, Object o) {
+		return visitor.visitSegmentDatabaseNode(this, o);
 	}
 }

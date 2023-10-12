@@ -1,13 +1,16 @@
-package input.components;
+package input.components.point;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import input.components.ComponentNode;
+import visitor.ComponentNodeVisitor;
+
 //import utilities.math.MathUtilities;
 
-public class PointNodeDatabase {
+public class PointNodeDatabase implements ComponentNode {
 	
 	protected Set<PointNode> database = new LinkedHashSet<PointNode>();
 	
@@ -72,5 +75,10 @@ public class PointNodeDatabase {
 			names.add(node.getName());
 		}
 		return names;
+	}
+
+	@Override
+	public Object accept(ComponentNodeVisitor visitor, Object o) {
+		return visitor.visitPointNodeDatabase(this, o);
 	}
 }

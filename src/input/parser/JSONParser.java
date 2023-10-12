@@ -12,12 +12,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import builder.GeometryBuilder;
 import builder.DefaultBuilder;
 import input.components.*;
-import input.components.PointNode;
-import input.components.PointNodeDatabase;
-import input.components.SegmentNodeDatabase;
+import input.components.point.PointNode;
+import input.components.point.PointNodeDatabase;
+import input.components.segments.SegmentNodeDatabase;
 import input.exception.ParseException;
 
 /**
@@ -124,18 +123,28 @@ public class JSONParser
 		 * Stores points in an ArrayList, making them iterable
 		 * Instantiates the PointNodeDatabase object 
 		 */
-		ArrayList<PointNode> newPNDB = new ArrayList<PointNode>();
+		ArrayList<JSONObject> newPNDB = new ArrayList<JSONObject>();
+		ArrayList<PointNode> pointNodeList = new ArrayList<PointNode>();
 		PointNodeDatabase pointNodeDB = new PointNodeDatabase();
 		/**
 		 * Loops through objects (points) in the pndbArray and populates the ArrayList
 		 * 		again: this makes the points iterable 
 		 */
 		for (Object obj : pndbArray) {
-			PointNode currNode = (PointNode) obj;
-			PointNode builtNode = _builder.buildPointNode(currNode.getName(), currNode.getX(), currNode.getY());
-			newPNDB.add(builtNode);
+			newPNDB.add((JSONObject) obj);
 		}
-		_builder.buildPointDatabaseNode(newPNDB);
+		/**
+		 * For each item in the (now populated) ArrayList, a PointNode object is created
+		 * 		This is then added to the instance of PointNodeDatabase
+		 */
+		for (JSONObject individual_node : newPNDB) {
+			String name = individual_node.getString("name");
+			Double x = individual_node.getDouble("x");
+			Double y = individual_node.getDouble("y");
+			pointNodeList.add(_builder.buildPointNode(name, x, y));
+		}
+		
+		_builder.buildPointDatabaseNode(pointNodeList);
 		return pointNodeDB;
 	}
 

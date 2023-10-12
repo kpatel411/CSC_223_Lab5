@@ -1,4 +1,8 @@
-package input.components;
+package input.components.segments;
+
+import input.components.ComponentNode;
+import input.components.point.PointNode;
+import visitor.ComponentNodeVisitor;
 
 //import input.components.point.PointNode;
 //import utilities.math.MathUtilities;
@@ -6,7 +10,7 @@ package input.components;
 /**
  * A utility class only for representing ONE segment
  */
-public class SegmentNode
+public class SegmentNode implements ComponentNode
 {
 	protected PointNode _point1;
 	protected PointNode _point2;
@@ -34,5 +38,9 @@ public class SegmentNode
     public String toString()
     {
 		return String.format("%s %s", _point1.toString(), _point2.toString());
+	}
+	@Override
+	public Object accept(ComponentNodeVisitor visitor, Object o) {
+		return visitor.visitSegmentNode(this, o);
 	}
 }

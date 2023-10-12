@@ -4,8 +4,8 @@ import java.util.List;
 
 import input.components.*;
 import input.components.point.*;
-import input.components.segment.SegmentNode;
-import input.components.segment.SegmentNodeDatabase;
+import input.components.segments.SegmentNode;
+import input.components.segments.SegmentNodeDatabase;
 
 /*
  * A Builder design pattern for constructing a geometry hierarchy.

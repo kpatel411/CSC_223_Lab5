@@ -4,7 +4,8 @@
  */
 
 package input.parser;
-
+import builder.DefaultBuilder;
+import builder.GeometryBuilder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,12 +15,12 @@ import org.junit.jupiter.api.Test;
 import input.components.ComponentNode;
 import input.components.FigureNode;
 import input.exception.ParseException;
-
 class JSONParserTest
 {
+	
 	public static ComponentNode runFigureParseTest(String filename)
 	{
-		JSONParser parser = new JSONParser();
+		JSONParser parser = new JSONParser(new GeometryBuilder());
 
 		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filename);
 		
@@ -29,7 +30,7 @@ class JSONParserTest
 	@Test
 	void empty_json_string_test()
 	{
-		JSONParser parser = new JSONParser();
+		JSONParser parser = new JSONParser(new DefaultBuilder());
 
 		assertThrows(ParseException.class, () -> { parser.parse("{}"); });
 	}
@@ -48,7 +49,11 @@ class JSONParserTest
 		assertTrue(node instanceof FigureNode);
 		
 		StringBuilder sb = new StringBuilder();
-		node.unparse(sb, 0);
+		//create unparser visitor object: 'unparser'
+		//call the unparser with the figure node, which is the varibal enode
+		unparser.visitFigureNode(node, sb);
+		node.accept(unparser, node);
+//		node.unparse(sb, 0);
 		System.out.println(sb.toString());
 	}
 	

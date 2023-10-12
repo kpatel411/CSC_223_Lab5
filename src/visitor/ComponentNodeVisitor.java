@@ -1,9 +1,9 @@
-package input.visitor;
+package visitor;
 
 import input.components.*;
 import input.components.point.*;
-import input.components.segment.SegmentNode;
-import input.components.segment.SegmentNodeDatabase;
+import input.components.segments.SegmentNode;
+import input.components.segments.SegmentNodeDatabase;
 
 //
 // All of the following are ComponentNode Classes

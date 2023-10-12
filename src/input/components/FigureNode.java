@@ -9,7 +9,11 @@ package input.components;
 
 import java.util.List;
 
+import input.components.point.PointNode;
+import input.components.point.PointNodeDatabase;
+import input.components.segments.SegmentNodeDatabase;
 import utilities.io.StringUtilities;
+import visitor.ComponentNodeVisitor;
 
 /**
  * A basic figure consists of points, segments, and an optional description
@@ -22,6 +26,13 @@ import utilities.io.StringUtilities;
  */ 
 public class FigureNode implements ComponentNode
 {
+
+	@Override
+	public Object accept(ComponentNodeVisitor visitor, Object o)
+	{
+		return visitor.visitFigureNode(this, o);
+	}
+
 	/**
 	 * Instantiation of instance variables _description, _points, and _segments,
 	 * 		which contain instances of a String, PointNodeDatabase, and SegmentNodeDatabase,
@@ -100,7 +111,7 @@ public class FigureNode implements ComponentNode
 		 */
 		sb.append(StringUtilities.indent(level) + "Points: " + "\n");
 		sb.append(StringUtilities.indent(level) + "{" + "\n");
-		
+
 		/**
 		 * Create a list containing the names of all points in the PointNodeDatabase 
 		 * 		This makes the points iterable
@@ -109,7 +120,7 @@ public class FigureNode implements ComponentNode
 		 * 		(indent one level past sub-section outline) Point("name")("x")("y") 
 		 * 		followed by a new line 
 		 */
-		
+
 		//TODO: make this functionality a part of the DBs: this should not allow private access
 		List<String> names = _points.getAllNodeNames();
 		for (String name : names) {
@@ -131,7 +142,7 @@ public class FigureNode implements ComponentNode
 		 */
 		sb.append(StringUtilities.indent(level) + "Segments: " + "\n");
 		sb.append(StringUtilities.indent(level) + "{" + "\n");
-		
+
 		//create a list of strings containing all segments
 		/**
 		 * Create a list containing the names of all points in the PointNodeDatabase 
