@@ -93,85 +93,118 @@ public class JSONParser
 		String description = figure.getString("Description");
 		JSONArray pndb = figure.getJSONArray("Points");
 		JSONArray sndb = figure.getJSONArray("Segments");
-
-		/**
-		 * These method calls read the respective pndb and sndb information to create 
-		 * 		instances of PointNodeDatabase and SegmentNodeDatabase
-		 */
-		PointNodeDatabase pointNodeDatabase = readsPNDB(pndb);
-		//should become a call to buildPointNodeDatabase 
-		SegmentNodeDatabase segmentNodeDatabase = readsSNDB(sndb, pointNodeDatabase);
-		//should become a call to buildSegmentNodeDatabase 
-
-
-		/**
-		 * Instantiates a FigureNode object, and assigns it to _astRoot
-		 * returns _astRoot
-		 */
-		_astRoot = new FigureNode(description, pointNodeDatabase, segmentNodeDatabase);
-		return _astRoot;
-	}
-
-	/**
-	 * readsPNDB() method 
-	 * 		reads JSON 'pndb' information and converts it to a PointNodeDatabase
-	 * @param pndbArray contains 'pndb' - a JSONArray with the point information for the file
-	 * @return an instance of PointNodeDatabase, containing the points from the JSON figure
-	 */
-	public PointNodeDatabase readsPNDB(JSONArray pndbArray) {
-		/**
-		 * Stores points in an ArrayList, making them iterable
+		
+		 /* Stores points in an ArrayList, making them iterable
 		 * Instantiates the PointNodeDatabase object 
 		 */
-		ArrayList<JSONObject> newPNDB = new ArrayList<JSONObject>();
+		ArrayList<PointNode> newPNDB = new ArrayList<PointNode>();
+//		ArrayList<JSONObject> newPNDB = new ArrayList<JSONObject>();
 		ArrayList<PointNode> pointNodeList = new ArrayList<PointNode>();
 		PointNodeDatabase pointNodeDB = new PointNodeDatabase();
 		/**
 		 * Loops through objects (points) in the pndbArray and populates the ArrayList
 		 * 		again: this makes the points iterable 
 		 */
-		for (Object obj : pndbArray) {
-			newPNDB.add((JSONObject) obj);
+		for (Object obj : newPNDB) {
+			PointNode currNode = (PointNode) obj;
+			PointNode builtNode = _builder.buildPointNode(currNode.getName(), currNode.getX(), currNode.getY());
+			newPNDB.add(builtNode);
+//			newPNDB.add((JSONObject) obj);
 		}
+		_builder.buildPointDatabaseNode(newPNDB);
 		/**
 		 * For each item in the (now populated) ArrayList, a PointNode object is created
 		 * 		This is then added to the instance of PointNodeDatabase
 		 */
-		for (JSONObject individual_node : newPNDB) {
-			String name = individual_node.getString("name");
-			Double x = individual_node.getDouble("x");
-			Double y = individual_node.getDouble("y");
+		for (PointNode individual_node : newPNDB) {
+			String name = individual_node.getName();
+			Double x = individual_node.getX();
+			Double y = individual_node.getY();
 			pointNodeList.add(_builder.buildPointNode(name, x, y));
 		}
 		
 		_builder.buildPointDatabaseNode(pointNodeList);
 		return pointNodeDB;
 	}
-
-	/**
-	 * readsSNDB() method 
-	 * 		reads JSON 'sndb' information and converts it to a SegmentNodeDatabase
-	 * @param sndbArray contains 'sndb' - a JSONArray with the segment information for the file
-	 * @param pointNodeDatabase passes the PointNodeDatabase created by readsPNDB() 
-	 * 		this makes PointNode information more easily accessible, when applicable 
-	 * @return an instance of SegmentNodeDatabase, containing the segments for the JSON Figure 
-	 */
-	public SegmentNodeDatabase readsSNDB(JSONArray sndbArray, PointNodeDatabase pointNodeDatabase) {
-		ArrayList<JSONObject> newSNDB = new ArrayList<JSONObject>();
-		SegmentNodeDatabase segmentNodeDB = _builder.buildSegmentNodeDatabase();
-		for (Object segmentObj : sndbArray) {
-			newSNDB.add((JSONObject) segmentObj);
-		}
-		for (JSONObject adjacencyListObj : newSNDB) {
-			String key = adjacencyListObj.keys().next();
-			JSONArray values = adjacencyListObj.getJSONArray(key);
-			for (Object value : values) {
-				PointNode currentKey = pointNodeDatabase.getNodeByName(key);
-				PointNode currentValue =  pointNodeDatabase.getNodeByName((String) value);
-				_builder.addSegmentToDatabase(segmentNodeDB, currentKey, currentValue);
-			}
-		}
-		return segmentNodeDB;
-	}
-
 }
+//		/**
+//		 * These method calls read the respective pndb and sndb information to create 
+//		 * 		instances of PointNodeDatabase and SegmentNodeDatabase
+//		 */
+//		PointNodeDatabase pointNodeDatabase = readsPNDB(pndb);
+//		//should become a call to buildPointNodeDatabase 
+//		SegmentNodeDatabase segmentNodeDatabase = readsSNDB(sndb, pointNodeDatabase);
+//		//should become a call to buildSegmentNodeDatabase 
+//
+//
+//		/**
+//		 * Instantiates a FigureNode object, and assigns it to _astRoot
+//		 * returns _astRoot
+//		 */
+//		_astRoot = new FigureNode(description, pointNodeDatabase, segmentNodeDatabase);
+//		return _astRoot;
+//	}
+//
+//	/**
+//	 * readsPNDB() method 
+//	 * 		reads JSON 'pndb' information and converts it to a PointNodeDatabase
+//	 * @param pndbArray contains 'pndb' - a JSONArray with the point information for the file
+//	 * @return an instance of PointNodeDatabase, containing the points from the JSON figure
+//	 */
+//	public PointNodeDatabase readsPNDB(JSONArray pndbArray) {
+//		/**
+//		 * Stores points in an ArrayList, making them iterable
+//		 * Instantiates the PointNodeDatabase object 
+//		 */
+//		ArrayList<JSONObject> newPNDB = new ArrayList<JSONObject>();
+//		ArrayList<PointNode> pointNodeList = new ArrayList<PointNode>();
+//		PointNodeDatabase pointNodeDB = new PointNodeDatabase();
+//		/**
+//		 * Loops through objects (points) in the pndbArray and populates the ArrayList
+//		 * 		again: this makes the points iterable 
+//		 */
+//		for (Object obj : pndbArray) {
+//			newPNDB.add((JSONObject) obj);
+//		}
+//		/**
+//		 * For each item in the (now populated) ArrayList, a PointNode object is created
+//		 * 		This is then added to the instance of PointNodeDatabase
+//		 */
+//		for (JSONObject individual_node : newPNDB) {
+//			String name = individual_node.getString("name");
+//			Double x = individual_node.getDouble("x");
+//			Double y = individual_node.getDouble("y");
+//			pointNodeList.add(_builder.buildPointNode(name, x, y));
+//		}
+//		
+//		_builder.buildPointDatabaseNode(pointNodeList);
+//		return pointNodeDB;
+//	}
+//
+//	/**
+//	 * readsSNDB() method 
+//	 * 		reads JSON 'sndb' information and converts it to a SegmentNodeDatabase
+//	 * @param sndbArray contains 'sndb' - a JSONArray with the segment information for the file
+//	 * @param pointNodeDatabase passes the PointNodeDatabase created by readsPNDB() 
+//	 * 		this makes PointNode information more easily accessible, when applicable 
+//	 * @return an instance of SegmentNodeDatabase, containing the segments for the JSON Figure 
+//	 */
+//	public SegmentNodeDatabase readsSNDB(JSONArray sndbArray, PointNodeDatabase pointNodeDatabase) {
+//		ArrayList<JSONObject> newSNDB = new ArrayList<JSONObject>();
+//		SegmentNodeDatabase segmentNodeDB = _builder.buildSegmentNodeDatabase();
+//		for (Object segmentObj : sndbArray) {
+//			newSNDB.add((JSONObject) segmentObj);
+//		}
+//		for (JSONObject adjacencyListObj : newSNDB) {
+//			String key = adjacencyListObj.keys().next();
+//			JSONArray values = adjacencyListObj.getJSONArray(key);
+//			for (Object value : values) {
+//				PointNode currentKey = pointNodeDatabase.getNodeByName(key);
+//				PointNode currentValue =  pointNodeDatabase.getNodeByName((String) value);
+//				_builder.addSegmentToDatabase(segmentNodeDB, currentKey, currentValue);
+//			}
+//		}
+//		return segmentNodeDB;
+//	}
+//
+//}
