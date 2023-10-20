@@ -1,19 +1,11 @@
 package builder;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import input.components.ComponentNode;
 import input.components.FigureNode;
 import input.components.point.PointNode;
 import input.components.point.PointNodeDatabase;
 import input.components.segments.SegmentNode;
 import input.components.segments.SegmentNodeDatabase;
-import input.exception.ParseException;
 
 public class GeometryBuilder extends DefaultBuilder {
 
@@ -28,15 +20,12 @@ public class GeometryBuilder extends DefaultBuilder {
     
 	@Override
     public SegmentNodeDatabase buildSegmentNodeDatabase() {
-		SegmentNodeDatabase segmentNodeDB = new SegmentNodeDatabase();
-        return segmentNodeDB;
+        return new SegmentNodeDatabase();
     }
     
 	@Override
     public void addSegmentToDatabase(SegmentNodeDatabase segments, PointNode from, PointNode to) {
     	if (segments != null) segments.addUndirectedEdge(from, to);
-    	//TODO: figure out what method is supposed to iterate over segmentNodeDatabase
-    	//test comment
     }
     
 	@Override
@@ -46,11 +35,7 @@ public class GeometryBuilder extends DefaultBuilder {
     
 	@Override
     public PointNodeDatabase buildPointDatabaseNode(List<PointNode> points) {
-		PointNodeDatabase pointNodeDB = new PointNodeDatabase();
-		for (PointNode pointNode : points) {
-			buildPointNode(pointNode.getName(), pointNode.getX(), pointNode.getY());
-		}
-        return pointNodeDB;
+		return new PointNodeDatabase(points);
     }
 	
 	@Override

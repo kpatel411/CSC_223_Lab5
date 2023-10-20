@@ -7,11 +7,11 @@ import input.components.segments.SegmentNode;
 import input.components.segments.SegmentNodeDatabase;
 import utilities.io.StringUtilities;
 
-//
-// This file implements a Visitor (design pattern) with 
-// the intent of building an unparsed, String representation
-// of a geometry figure.
-//
+/**
+ * This file implements a Visitor (design pattern) with 
+ * the intent of building an unparsed, String representation
+ * of a geometry figure.
+ */
 public class UnparseVisitor implements ComponentNodeVisitor
 {
 	@Override
@@ -26,11 +26,11 @@ public class UnparseVisitor implements ComponentNodeVisitor
 		sb.append(StringUtilities.indent(level) + "Figure" + "\n");
 		sb.append(StringUtilities.indent(level) + "{" + "\n");
 		sb.append(StringUtilities.indent(level+1) + "Description: " + node.getDescription() + "\n");
-		node.getPointsDatabase().accept(this, o);
-		node.getSegments().accept(this, o);
+		visitPointNodeDatabase(node.getPointsDatabase(), pair);
+		visitSegmentDatabaseNode(node.getSegments(), pair);
 		sb.append(StringUtilities.indent(level) + "}" + "\n");
 
-		
+		sb.append("\n\n---------------------------------------------");
 		return sb;
 	}
 
@@ -42,18 +42,18 @@ public class UnparseVisitor implements ComponentNodeVisitor
 		StringBuilder sb = pair.getKey();
 		int level = pair.getValue();
 
-		sb.append(StringUtilities.indent(level) + "Segments: " + "\n");
-		sb.append(StringUtilities.indent(level) + "{" + "\n");
+		sb.append(StringUtilities.indent(level + 1) + "Segments: " + "\n");
+		sb.append(StringUtilities.indent(level + 1) + "{" + "\n");
 
-		
+
 		for (PointNode adjList : node.getAdjLists().keySet()) {
-			sb.append(StringUtilities.indent(level+1) + adjList + " : ");
+			sb.append(StringUtilities.indent(level+2) + adjList.getName() + " : ");
 			for (PointNode adjListNameNode : node.getAdjLists().get(adjList)) {
 				visitSegmentNode(new SegmentNode(adjList, adjListNameNode), o);
-				sb.append(adjListNameNode.getName() + "    ");
 			}			
 			sb.append("\n");
 		}
+		sb.append(StringUtilities.indent(level + 1) + "}" + "\n");
 		return sb;
 	}
 
@@ -65,7 +65,9 @@ public class UnparseVisitor implements ComponentNodeVisitor
 		StringBuilder sb = pair.getKey();
 		int level = pair.getValue();
 
-		sb.append(StringUtilities.indent(level+1) + node.getPoint2().getName() + " : ");
+		if (node.getPoint2() != null) {
+			sb.append(node.getPoint2().getName() + ", ");
+		}
 		return sb;
 	}
 
@@ -77,14 +79,14 @@ public class UnparseVisitor implements ComponentNodeVisitor
 		StringBuilder sb = pair.getKey();
 		int level = pair.getValue();
 		// TODO
-		sb.append(StringUtilities.indent(level) + "Points: " + "\n");
-		sb.append(StringUtilities.indent(level) + "{" + "\n");
+		sb.append(StringUtilities.indent(level + 1) + "Points: " + "\n");
+		sb.append(StringUtilities.indent(level + 1) + "{" + "\n");
 		for (String pointNodeName : node.getAllNodeNames()) {
 			PointNode pn = node.getNodeByName(pointNodeName);
 			visitPointNode(pn, o);	
 		}
-		
-		sb.append(StringUtilities.indent(level) + "}" + "\n");
+
+		sb.append(StringUtilities.indent(level + 1) + "}" + "\n");
 
 		return sb;
 	}
@@ -96,10 +98,10 @@ public class UnparseVisitor implements ComponentNodeVisitor
 		AbstractMap.SimpleEntry<StringBuilder, Integer> pair = (AbstractMap.SimpleEntry<StringBuilder, Integer>)(o);
 		StringBuilder sb = pair.getKey();
 		int level = pair.getValue();
-		
-		sb.append(StringUtilities.indent(level + 1) + "Point(" + node.getName() 
+
+		sb.append(StringUtilities.indent(level + 2) + "Point(" + node.getName() 
 		+ ")(" + node.getX() + ", " + node.getY() + ")" + "\n");
-		
+
 		return sb;
 	}
 }

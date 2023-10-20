@@ -9,9 +9,7 @@ package input.components;
 
 import input.components.point.PointNodeDatabase;
 import input.components.segments.SegmentNodeDatabase;
-import utilities.io.StringUtilities;
 import visitor.ComponentNodeVisitor;
-import visitor.UnparseVisitor;
 
 /**
  * A basic figure consists of points, segments, and an optional description
@@ -24,13 +22,6 @@ import visitor.UnparseVisitor;
  */ 
 public class FigureNode implements ComponentNode
 {
-
-	@Override
-	public Object accept(ComponentNodeVisitor visitor, Object o)
-	{
-		return visitor.visitFigureNode(this, o);
-	}
-
 	/**
 	 * Instantiation of instance variables _description, _points, and _segments,
 	 * 		which contain instances of a String, PointNodeDatabase, and SegmentNodeDatabase,
@@ -60,27 +51,9 @@ public class FigureNode implements ComponentNode
 		_points = points;
 		_segments = segments;
 	}
-
-	/**
-	 *  unparse() method
-	 *  	Takes the ComponentNode object and traverses it, creating a StringBuilder object
-	 *  	This StringBuilder is then printed during testing, allowing us to verify the
-	 *  	digestion of a given JSON File in a more readable format 
-	 */
-	public void unparse(StringBuilder sb, int level)
-	{
-		//initialize level of the tree for reading
-		/**
-		 * initialize level to 0 for indentation purposes
-		 * create basic "Figure" header and opening/closing braces
-		 * within those braces, call helper method handleDescription(), handlePoints() and handleSegments()
-		 * 		note that level is passed as level + 1; this indents each sub-section another level
-		 */
-		level = 0;
-		sb.append(StringUtilities.indent(level) + "Figure" + "\n");
-		sb.append(StringUtilities.indent(level) + "{" + "\n");
-		UnparseVisitor unparseVisitor = new UnparseVisitor();
-		unparseVisitor.visitFigureNode(this, level+1);
-		sb.append(StringUtilities.indent(level) + "}" + "\n");
+	
+	@Override 
+	public Object accept(ComponentNodeVisitor visitor, Object o) {
+		return visitor.visitFigureNode(this, o);
 	}
 }
