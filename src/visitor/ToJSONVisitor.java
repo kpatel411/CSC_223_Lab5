@@ -1,16 +1,11 @@
 package visitor;
 
-import java.io.BufferedReader;
-import java.util.AbstractMap;
-
 import org.json.*;
 import input.components.FigureNode;
 import input.components.point.PointNode;
 import input.components.point.PointNodeDatabase;
 import input.components.segments.SegmentNode;
 import input.components.segments.SegmentNodeDatabase;
-import input.parser.JSONParser;
-import utilities.io.StringUtilities;
 
 public class ToJSONVisitor implements ComponentNodeVisitor {
 

@@ -1,7 +1,6 @@
 package visitor;
 
 import java.util.AbstractMap;
-
 import input.components.*;
 import input.components.point.*;
 import input.components.segments.SegmentNode;
@@ -31,6 +30,7 @@ public class UnparseVisitor implements ComponentNodeVisitor
 		node.getSegments().accept(this, o);
 		sb.append(StringUtilities.indent(level) + "}" + "\n");
 
+		
 		return sb;
 	}
 

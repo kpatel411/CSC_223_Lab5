@@ -4,26 +4,22 @@
  */
 
 package input.parser;
-import builder.DefaultBuilder;
-import builder.GeometryBuilder;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.AbstractMap;
-
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-
 import input.components.ComponentNode;
 import input.components.FigureNode;
 import input.exception.ParseException;
-import visitor.UnparseVisitor;
+import builder.DefaultBuilder;
+import builder.GeometryBuilder;
+
+
 class JSONParserTest
 {
-
 	public static ComponentNode runFigureParseTest(String filename)
 	{
-		JSONParser parser = new JSONParser(new GeometryBuilder());
+		JSONParser parser = new JSONParser(new DefaultBuilder());
 
 		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filename);
 
@@ -47,14 +43,19 @@ class JSONParserTest
 		// files into a folder, update this String with the path:
 		//                                       e.g., "my_folder/single_triangle.json"
 		//
+
 		ComponentNode node = JSONParserTest.runFigureParseTest("single_triangle.json");
 
 		assertTrue(node instanceof FigureNode);
-
+		
+		
 		StringBuilder sb = new StringBuilder();
-		UnparseVisitor unparser = new UnparseVisitor();
-		unparser.visitFigureNode((FigureNode)node,
-				new AbstractMap.SimpleEntry<StringBuilder, Integer>(sb, 0));
+		node.unparse(sb, 0);
+		//create unparser visitor object: 'unparser'
+		//call the unparser with the figure node, which is the varibal enode
+		unparser.visitFigureNode(node, sb);
+		node.accept(unparser, node);
+//		node.unparse(sb, 0);
 		System.out.println(sb.toString());
 	}
 
@@ -66,9 +67,7 @@ class JSONParserTest
 		assertTrue(node instanceof FigureNode);
 
 		StringBuilder sb = new StringBuilder();
-		UnparseVisitor unparser = new UnparseVisitor();
-		unparser.visitFigureNode((FigureNode)node,
-				new AbstractMap.SimpleEntry<StringBuilder, Integer>(sb, 0));
+		node.unparse(sb, 0);
 		System.out.println(sb.toString());
 	}
 
@@ -80,9 +79,7 @@ class JSONParserTest
 		assertTrue(node instanceof FigureNode);
 
 		StringBuilder sb = new StringBuilder();
-		UnparseVisitor unparser = new UnparseVisitor();
-		unparser.visitFigureNode((FigureNode)node,
-				new AbstractMap.SimpleEntry<StringBuilder, Integer>(sb, 0));
+		node.unparse(sb, 0);
 		System.out.println(sb.toString());
 	}
 
@@ -94,9 +91,7 @@ class JSONParserTest
 		assertTrue(node instanceof FigureNode);
 
 		StringBuilder sb = new StringBuilder();
-		UnparseVisitor unparser = new UnparseVisitor();
-		unparser.visitFigureNode((FigureNode)node,
-				new AbstractMap.SimpleEntry<StringBuilder, Integer>(sb, 0));
+		node.parse(sb, 0);
 		System.out.println(sb.toString());
 	}
 
@@ -114,9 +109,7 @@ class JSONParserTest
 		assertTrue(node instanceof FigureNode);
 
 		StringBuilder sb = new StringBuilder();
-		UnparseVisitor unparser = new UnparseVisitor();
-		unparser.visitFigureNode((FigureNode)node,
-				new AbstractMap.SimpleEntry<StringBuilder, Integer>(sb, 0));
+		node.unparse(sb, 0);
 		System.out.println(sb.toString());
 	}
 
@@ -153,9 +146,7 @@ class JSONParserTest
 		assertTrue(node instanceof FigureNode);
 
 		StringBuilder sb = new StringBuilder();
-		UnparseVisitor unparser = new UnparseVisitor();
-		unparser.visitFigureNode((FigureNode)node,
-				new AbstractMap.SimpleEntry<StringBuilder, Integer>(sb, 0));
+		node.unparse(sb, 0);
 		System.out.println(sb.toString());
 	}
 
@@ -179,9 +170,7 @@ class JSONParserTest
 		assertTrue(node instanceof FigureNode);
 
 		StringBuilder sb = new StringBuilder();
-		UnparseVisitor unparser = new UnparseVisitor();
-		unparser.visitFigureNode((FigureNode)node,
-				new AbstractMap.SimpleEntry<StringBuilder, Integer>(sb, 0));
+		node.unparse(sb, 0);
 		System.out.println(sb.toString());
 	}
 }

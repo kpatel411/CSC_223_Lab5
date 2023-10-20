@@ -3,5 +3,5 @@ import visitor.ComponentNodeVisitor;
 
 public interface ComponentNode
 {
- Object accept(ComponentNodeVisitor visitor, Object o);
+	Object accept(ComponentNodeVisitor visitor, Object o);
 }

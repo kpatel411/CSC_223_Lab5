@@ -7,9 +7,6 @@
 
 package input.components;
 
-import java.util.List;
-
-import input.components.point.PointNode;
 import input.components.point.PointNodeDatabase;
 import input.components.segments.SegmentNodeDatabase;
 import utilities.io.StringUtilities;
