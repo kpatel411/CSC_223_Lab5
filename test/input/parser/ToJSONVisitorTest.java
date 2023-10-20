@@ -63,9 +63,10 @@ public class ToJSONVisitorTest {
 
 		StringBuilder sb = new StringBuilder();
 		ToJSONVisitor unparser = new ToJSONVisitor();
-		unparser.visitFigureNode((FigureNode)node,
+		Object json = unparser.visitFigureNode((FigureNode)node,
 				new AbstractMap.SimpleEntry<StringBuilder, Integer>(sb, 0));
 		System.out.println(sb.toString());
+		System.out.println(json);
 	}
 
 	@Test

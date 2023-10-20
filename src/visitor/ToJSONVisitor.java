@@ -7,6 +7,11 @@ import input.components.point.PointNodeDatabase;
 import input.components.segments.SegmentNode;
 import input.components.segments.SegmentNodeDatabase;
 
+//TODO: add comment describing class and structure of JSON object
+//TODO: check with default builder 
+//TODO: check that JSONVisitor does create JSONObject properly 
+	//see if there's an equals method? depth based?
+	//check with original file and produced FigureNode
 public class ToJSONVisitor implements ComponentNodeVisitor {
 
 	@Override

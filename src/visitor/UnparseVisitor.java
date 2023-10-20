@@ -99,8 +99,8 @@ public class UnparseVisitor implements ComponentNodeVisitor
 		StringBuilder sb = pair.getKey();
 		int level = pair.getValue();
 
-		sb.append(StringUtilities.indent(level + 2) + "Point(" + node.getName() 
-		+ ")(" + node.getX() + ", " + node.getY() + ")" + "\n");
+		sb.append(StringUtilities.indent(level + 2) + "Point(" + node.getName() + 
+				  ")(" + node.getX() + ", " + node.getY() + ")" + "\n");
 
 		return sb;
 	}
