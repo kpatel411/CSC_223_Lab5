@@ -18,7 +18,7 @@ public class UnparseVisitorTest {
 
 	public static ComponentNode runFigureParseTest(String filename)
 	{
-		JSONParser parser = new JSONParser(new GeometryBuilder());
+		JSONParser parser = new JSONParser(new DefaultBuilder());
 
 		String figureStr = utilities.io.FileUtilities.readFileFilterComments(filename);
 
@@ -42,7 +42,21 @@ public class UnparseVisitorTest {
 		// files into a folder, update this String with the path:
 		//                                       e.g., "my_folder/single_triangle.json"
 		//
-		ComponentNode node = JSONParserTest.runFigureParseTest("single_triangle.json");
+		ComponentNode node = JSONParserTest.runFigureParseTestDefault("single_triangle.json");
+
+		assertNull(node);
+	}
+	
+	@Test
+	void single_triangle_testG()
+	{
+		//
+		// The input String ("single_triangle.json") assumes the file is
+		// located at the top-level of the project. If you move your input
+		// files into a folder, update this String with the path:
+		//                                       e.g., "my_folder/single_triangle.json"
+		//
+		ComponentNode node = JSONParserTest.runFigureParseTestGeometry("single_triangle.json");
 
 		assertTrue(node instanceof FigureNode);
 
@@ -56,7 +70,15 @@ public class UnparseVisitorTest {
 	@Test
 	void collinear_line_segments_test()
 	{
-		ComponentNode node = JSONParserTest.runFigureParseTest("collinear_line_segments.json");
+		ComponentNode node = JSONParserTest.runFigureParseTestDefault("collinear_line_segments.json");
+
+		assertNull(node);
+	}
+	
+	@Test
+	void collinear_line_segments_testG()
+	{
+		ComponentNode node = JSONParserTest.runFigureParseTestGeometry("collinear_line_segments.json");
 
 		assertTrue(node instanceof FigureNode);
 
@@ -70,7 +92,15 @@ public class UnparseVisitorTest {
 	@Test
 	void crossing_symmetric_triangle_test()
 	{
-		ComponentNode node = JSONParserTest.runFigureParseTest("crossing_symmetric_triangle.json");
+		ComponentNode node = JSONParserTest.runFigureParseTestDefault("crossing_symmetric_triangle.json");
+
+		assertNull(node);
+	}
+	
+	@Test
+	void crossing_symmetric_triangle_testG()
+	{
+		ComponentNode node = JSONParserTest.runFigureParseTestGeometry("crossing_symmetric_triangle.json");
 
 		assertTrue(node instanceof FigureNode);
 
@@ -84,7 +114,15 @@ public class UnparseVisitorTest {
 	@Test
 	void fully_connected_irregular_polygon_test()
 	{
-		ComponentNode node = JSONParserTest.runFigureParseTest("fully_connected_irregular_polygon.json");
+		ComponentNode node = JSONParserTest.runFigureParseTestDefault("fully_connected_irregular_polygon.json");
+
+		assertNull(node);
+	}
+	
+	@Test
+	void fully_connected_irregular_polygon_testG()
+	{
+		ComponentNode node = JSONParserTest.runFigureParseTestGeometry("fully_connected_irregular_polygon.json");
 
 		assertTrue(node instanceof FigureNode);
 
@@ -104,7 +142,15 @@ public class UnparseVisitorTest {
 	@Test
 	void catWithTriangles_test()
 	{
-		ComponentNode node = JSONParserTest.runFigureParseTest("catWithTriangles.json");
+		ComponentNode node = JSONParserTest.runFigureParseTestDefault("catWithTriangles.json");
+
+		assertNull(node);
+	}
+	
+	@Test
+	void catWithTriangles_testG()
+	{
+		ComponentNode node = JSONParserTest.runFigureParseTestGeometry("catWithTriangles.json");
 
 		assertTrue(node instanceof FigureNode);
 
@@ -143,7 +189,15 @@ public class UnparseVisitorTest {
 	@Test
 	void octogonSnowman_test()
 	{
-		ComponentNode node = JSONParserTest.runFigureParseTest("octogonSnowman.json");
+		ComponentNode node = JSONParserTest.runFigureParseTestDefault("octogonSnowman.json");
+
+		assertNull(node);
+	}
+	
+	@Test
+	void octogonSnowman_testG()
+	{
+		ComponentNode node = JSONParserTest.runFigureParseTestGeometry("octogonSnowman.json");
 
 		assertTrue(node instanceof FigureNode);
 
@@ -169,7 +223,15 @@ public class UnparseVisitorTest {
 	@Test
 	void pacmanGhost_test()
 	{
-		ComponentNode node = JSONParserTest.runFigureParseTest("pacmanGhost.json");
+		ComponentNode node = JSONParserTest.runFigureParseTestDefault("pacmanGhost.json");
+
+		assertNull(node);
+	}
+	
+	@Test
+	void pacmanGhost_testG()
+	{
+		ComponentNode node = JSONParserTest.runFigureParseTestGeometry("pacmanGhost.json");
 
 		assertTrue(node instanceof FigureNode);
 

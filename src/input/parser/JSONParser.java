@@ -115,15 +115,20 @@ public class JSONParser
 			//get the key of an adjacency list, and get that node
 			JSONObject currentAdjList = (JSONObject) adjList;
 			String key = currentAdjList.keys().next();
+			
+			if (pndb == null) return null;
 			PointNode pointOne = pndb.getNodeByName(key);
+			//null check before pointOne and addAdjacency
 			
 			//make a list of all the edges
 			JSONArray segmentPoints = currentAdjList.getJSONArray(key);
 			List<PointNode> edgeList = readsSegment(segmentPoints, pndb);
 			
 			//add those edges as an adjacency list 
-			segmentNodeDB.addAdgacencyList(pointOne, edgeList);
-			edgeList.clear();
+			if (edgeList != null) {
+				segmentNodeDB.addAdgacencyList(pointOne, edgeList);
+				edgeList.clear();
+			}
 		}
 		return segmentNodeDB;
 	}
